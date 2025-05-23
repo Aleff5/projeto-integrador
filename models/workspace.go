@@ -158,7 +158,7 @@ func ListWorkspaceMembers(db *sql.DB, workspaceID int64) ([]WorkspaceMember, err
 }
 
 func GetWorkspaceInfo(db *sql.DB, workspaceID int64) (*Workspace, error) {
-	var workspace models.Workspace
+	var workspace Workspace
 	query := `
 		SELECT id, name, description, is_public, owner_uid, created_at, members
 		FROM workspaces
