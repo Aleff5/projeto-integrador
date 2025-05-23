@@ -3,15 +3,34 @@ package models
 import (
 	"database/sql"
 	"errors"
+	"time"
 )
 
 type Workspace struct {
-	ID          int64  `json:"id"`
-	Name        string `json:"name"`
-	Description string `json:"description"`
-	IsPublic    bool   `json:"is_public"`
-	OwnerUID    string `json:"owner_uid"` // Firebase UID do dono
-	CreatedAt   string `json:"created_at"`
+	ID          int64     `json:"id"`
+	Name        string    `json:"name"`
+	Description string    `json:"description"`
+	IsPublic    bool      `json:"is_public"`
+	OwnerUID    string    `json:"owner_uid"` // Firebase UID do dono
+	CreatedAt   time.Time `json:"created_at"`
+	Members     int       `json:"members"`
+}
+
+type WorkspaceInvite struct {
+	ID          int64      `json:"id"`
+	WorkspaceID int64      `json:"workspace_id"`
+	InviteCode  string     `json:"invite_code"`
+	CreatedAt   time.Time  `json:"created_at"`
+	ExpiresAt   *time.Time `json:"expires_at,omitempty"` // ponteiro permite nulo
+	Role        string     `json:"role"`
+}
+
+// Relação Usuário → Workspace
+type UserWorkspace struct {
+	WorkspaceID int64     `json:"workspace_id"`
+	UserID      string    `json:"user_id"` // Firebase UID
+	Role        string    `json:"role"`
+	JoinedAt    time.Time `json:"joined_at"`
 }
 
 func CreatePrivateWorkspace(db *sql.DB, ownerUID string) (*Workspace, error) {
@@ -56,7 +75,6 @@ func CreatePrivateWorkspace(db *sql.DB, ownerUID string) (*Workspace, error) {
 	workspace.Description = description
 	workspace.IsPublic = false
 	workspace.OwnerUID = ownerUID
-	workspace.CreatedAt = workspace.CreatedAt
 
 	return &workspace, nil
 }
