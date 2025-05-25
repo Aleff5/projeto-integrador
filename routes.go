@@ -20,13 +20,11 @@ func LoadRoutes() {
 	// r.HandleFunc("/getuser", handlers.AuthMiddleware(handlers.GetUserHandler))
 	// r.HandleFunc("/getallusers", handlers.AuthMiddleware(handlers.GetAllUsersHandler))
 
-	headers := handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"})
-	methods := handlers.AllowedMethods([]string{"GET", "POST", "PUT"})
+
 
 	headers := gorillahandlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"})
 	methods := gorillahandlers.AllowedMethods([]string{"GET", "POST", "PUT"})
 	origins := gorillahandlers.AllowedOrigins([]string{"*"})
 
 	log.Fatal(http.ListenAndServe(":8080", gorillahandlers.CORS(headers, methods, origins)(r)))
-	log.Fatal(http.ListenAndServe(":8080", nil))
 }

@@ -43,18 +43,7 @@ func GetUserByUID(uid string) (*auth.UserRecord, error) {
 	return user, nil
 }
 
-// Buscar usuário por e-mail
-func GetUserByEmail(email string) (*auth.UserRecord, error) {
-	ctx := context.Background()
-	client := GetAuthClient()
 
-	user, err := client.GetUserByEmail(ctx, email)
-	if err != nil {
-		return nil, fmt.Errorf("erro ao buscar usuário por e-mail: %v", err)
-	}
-
-	return user, nil
-}
 
 // Deletar usuário
 func DeleteUser(uid string) error {

@@ -9,7 +9,7 @@ import (
 	"projeto-integrador/firebase"
 	"projeto-integrador/models"
 	"strings"
-
+	
 	"firebase.google.com/go/v4/auth"
 )
 
@@ -88,6 +88,9 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		defer db.Close()
+
+		// Aqui você pode criar um workspace privado para o usuário
+		models.CreatePrivateWorkspace(db, firebaseUser.UID)
 
 		// ** PASSO CHAVE: Gerar Custom Token para o Frontend **
 		customToken, tokenErr := authClient.CustomToken(ctx, firebaseUser.UID)

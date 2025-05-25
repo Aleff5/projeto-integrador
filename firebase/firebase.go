@@ -11,7 +11,7 @@ import (
 )
 
 func InitializeFirebase() (*firebase.App, error) {
-	opt := option.WithCredentialsFile("firebase/testes-a5a53-firebase-adminsdk-fbsvc-4dc021ae4e.json")
+	opt := option.WithCredentialsFile("firebase/projeto-integrador-b79db-firebase-adminsdk-fbsvc-16be031c36.json")
 
 	app, err := firebase.NewApp(context.Background(), nil, opt)
 	if err != nil {
